@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/post-manager-tool/static/css/main.8e60a5b9.css",
-    "main.js": "/post-manager-tool/static/js/main.6fe08339.js",
+    "main.js": "/post-manager-tool/static/js/main.c47b7624.js",
     "static/js/390.a7ba75e0.chunk.js": "/post-manager-tool/static/js/390.a7ba75e0.chunk.js",
     "static/js/787.3df37ca9.chunk.js": "/post-manager-tool/static/js/787.3df37ca9.chunk.js",
     "static/js/542.bb733008.chunk.js": "/post-manager-tool/static/js/542.bb733008.chunk.js",
     "index.html": "/post-manager-tool/index.html",
     "main.8e60a5b9.css.map": "/post-manager-tool/static/css/main.8e60a5b9.css.map",
-    "main.6fe08339.js.map": "/post-manager-tool/static/js/main.6fe08339.js.map",
+    "main.c47b7624.js.map": "/post-manager-tool/static/js/main.c47b7624.js.map",
     "390.a7ba75e0.chunk.js.map": "/post-manager-tool/static/js/390.a7ba75e0.chunk.js.map",
     "787.3df37ca9.chunk.js.map": "/post-manager-tool/static/js/787.3df37ca9.chunk.js.map",
     "542.bb733008.chunk.js.map": "/post-manager-tool/static/js/542.bb733008.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.8e60a5b9.css",
-    "static/js/main.6fe08339.js"
+    "static/js/main.c47b7624.js"
   ]
 }
