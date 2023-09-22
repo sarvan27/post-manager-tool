@@ -17,7 +17,7 @@ function App() {
       <Header />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Posts />} />
+          <Route path="/post-manager-tool" element={<Posts />} />
           <Route path="/404" element={<PageNotFound />} />
           <Route path="*" element={<Navigate to="/404" />} />
         </Routes>
