@@ -2,6 +2,12 @@ import * as actionType from '../actionTypes';
 
 export const fetchPosts = () => ({ type: actionType.FETCH_ALL_POST });
 
+export const setPreEditPost = (open) => ({ type: actionType.SET_PRE_EDIT_POST, payload: open });
+export const searchForPreEditPost = (title) => ({
+  type: actionType.SEARCH_PRE_EDIT_POST,
+  payload: title
+});
+
 export const selectPost = (value) => ({ type: actionType.SELECT_POST, payload: value });
 
 export const resetAddPost = () => ({ type: actionType.RESET_ADD_POST });

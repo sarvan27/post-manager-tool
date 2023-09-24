@@ -4,6 +4,7 @@ const initialState = {
   allPosts: [],
   allPostsLoading: false,
   viewablePosts: [],
+  preEditPost: false,
   addNewPost: {},
   editPost: {},
   deletePost: {}
@@ -33,6 +34,12 @@ export default function (state = initialState, action) {
         allPostsLoading: false
       };
     }
+    case actionType.SET_PRE_EDIT_POST_REDUCER: {
+      return {
+        ...state,
+        preEditPost: action.payload
+      };
+    }
     case actionType.UPDATE_VIEW_POST: {
       return {
         ...state,
@@ -54,6 +61,7 @@ export default function (state = initialState, action) {
     case actionType.UPDATE_LIST: {
       return {
         ...state,
+        preEditPost: false,
         addNewPost: {},
         editPost: {},
         deletePost: {},

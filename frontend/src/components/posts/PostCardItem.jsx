@@ -1,5 +1,13 @@
 import { Delete, Edit } from '@mui/icons-material';
-import { Avatar, Typography, Card, CardHeader, CardContent, IconButton } from '@mui/material';
+import {
+  Avatar,
+  Typography,
+  Card,
+  CardHeader,
+  CardContent,
+  IconButton,
+  Tooltip
+} from '@mui/material';
 import { blue } from '@mui/material/colors';
 import { number, string } from 'prop-types';
 import { memo } from 'react';
@@ -29,13 +37,16 @@ const PostCardItem = ({ userId, id, title, body }) => {
         }
         action={
           <>
-            <IconButton aria-label="edit" size="medium" color="primary" onClick={handleEdit}>
-              <Edit />
-            </IconButton>
-
-            <IconButton aria-label="edit" size="medium" color="error" onClick={handleDelete}>
-              <Delete />
-            </IconButton>
+            <Tooltip title="Edit post" placement="top">
+              <IconButton aria-label="edit" size="medium" color="primary" onClick={handleEdit}>
+                <Edit />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Delete post" placement="top">
+              <IconButton aria-label="edit" size="medium" color="error" onClick={handleDelete}>
+                <Delete />
+              </IconButton>
+            </Tooltip>
           </>
         }
         title={

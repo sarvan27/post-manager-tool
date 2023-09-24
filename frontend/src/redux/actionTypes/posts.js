@@ -16,6 +16,11 @@ export const SET_ADD_NEW_POST = 'SET_ADD_NEW_POST';
 export const CREATE_NEW_POST = 'CREATE_NEW_POST';
 export const RESET_ADD_POST = 'RESET_ADD_POST';
 
+// pre edit post to populate based on title
+export const SET_PRE_EDIT_POST = 'SET_PRE_EDIT_POST';
+export const SET_PRE_EDIT_POST_REDUCER = 'SET_PRE_EDIT_POST_REDUCER';
+export const SEARCH_PRE_EDIT_POST = 'SEARCH_PRE_EDIT_POST';
+
 // edit post
 export const SET_EDIT_POST = 'SET_EDIT_POST';
 export const SET_EDIT_POST_VALUE = 'SET_EDIT_POST_VALUE';

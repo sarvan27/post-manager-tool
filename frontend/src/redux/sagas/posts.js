@@ -23,13 +23,39 @@ function* fetchAllPosts() {
   yield takeLatest(actionType.FETCH_ALL_POST, fetchAllPostsSaga);
 }
 
+function* setPreEditPostSaga(action) {
+  yield put({ type: actionType.SET_PRE_EDIT_POST_REDUCER, payload: action.payload });
+}
+
+function* setPreEditPost() {
+  yield takeLatest(actionType.SET_PRE_EDIT_POST, setPreEditPostSaga);
+}
+
+function* searchPreEditPostSaga(action) {
+  const allPosts = yield select((state) => state.postReducer.allPosts);
+  if (allPosts?.length > 0) {
+    const preEdit = allPosts.find((obj) => obj.title === action.payload);
+    if (preEdit?.id) {
+      yield put({ type: actionType.SET_PRE_EDIT_POST_REDUCER, payload: false });
+      yield put({
+        type: actionType.SET_EDIT_POST_VALUE,
+        payload: preEdit
+      });
+    }
+  }
+}
+
+function* searchPreEditPost() {
+  yield takeLatest(actionType.SEARCH_PRE_EDIT_POST, searchPreEditPostSaga);
+}
+
 function* selectPostSaga(action) {
   const allPosts = yield select((state) => state.postReducer.allPosts);
   let data = [];
   if (!action?.payload?.id) {
     yield put({
       type: actionType.SET_ADD_NEW_POST,
-      payload: { title: action?.payload?.inputValue }
+      payload: { title: action?.payload?.inputValue ? action?.payload?.inputValue : '' }
     });
   }
   if (allPosts?.length > 0) {
@@ -145,6 +171,8 @@ function* confirmDeletion() {
 export default function* postsSaga() {
   yield all([
     fork(fetchAllPosts),
+    fork(setPreEditPost),
+    fork(searchPreEditPost),
     fork(selectPost),
     fork(createNewPost),
     fork(setEditPost),
