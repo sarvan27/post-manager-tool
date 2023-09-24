@@ -1,8 +1,11 @@
-const postList = require('./post-list')
+const { fetchPostDataFromJsonPlaceHolder } = require('./external-request')
 
-const getAllPosts = (req, res, next) => {
+const getAllPosts = async (req, res, next) => {
   try {
-    res.send({ status: 200, message: 'Ok', list: postList })
+    const response = await fetchPostDataFromJsonPlaceHolder();
+    let list = [];
+    if (response?.data) list = response?.data?.map(a => a)
+    res.send({ status: 200, message: 'Ok', list })
   } catch (error) {
     next(error)
   }
