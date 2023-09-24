@@ -1,11 +1,11 @@
-import { all, put, takeLatest, fork, select } from 'redux-saga/effects';
+import { put, takeLatest, select, call } from 'redux-saga/effects';
 import * as actionType from '../actionTypes';
 import { getAllPostsApi } from '../api';
 
-function* fetchAllPostsSaga() {
+export function* fetchAllPostsSaga() {
   try {
     yield put({ type: actionType.FETCH_ALL_POST_LOADING });
-    const data = yield getAllPostsApi();
+    const data = yield call(getAllPostsApi);
     if (data?.status === 200 && data?.list) {
       yield put({ type: actionType.FETCH_ALL_POST_SUCCESS, payload: data?.list });
     } else {
@@ -19,19 +19,11 @@ function* fetchAllPostsSaga() {
   }
 }
 
-function* fetchAllPosts() {
-  yield takeLatest(actionType.FETCH_ALL_POST, fetchAllPostsSaga);
-}
-
-function* setPreEditPostSaga(action) {
+export function* setPreEditPostSaga(action) {
   yield put({ type: actionType.SET_PRE_EDIT_POST_REDUCER, payload: action.payload });
 }
 
-function* setPreEditPost() {
-  yield takeLatest(actionType.SET_PRE_EDIT_POST, setPreEditPostSaga);
-}
-
-function* searchPreEditPostSaga(action) {
+export function* searchPreEditPostSaga(action) {
   const allPosts = yield select((state) => state.postReducer.allPosts);
   if (allPosts?.length > 0) {
     const preEdit = allPosts.find((obj) => obj.title === action.payload);
@@ -45,14 +37,10 @@ function* searchPreEditPostSaga(action) {
   }
 }
 
-function* searchPreEditPost() {
-  yield takeLatest(actionType.SEARCH_PRE_EDIT_POST, searchPreEditPostSaga);
-}
-
-function* selectPostSaga(action) {
+export function* selectPostSaga(action) {
   const allPosts = yield select((state) => state.postReducer.allPosts);
   let data = [];
-  if (!action?.payload?.id) {
+  if (!action?.payload?.id && action.payload !== null) {
     yield put({
       type: actionType.SET_ADD_NEW_POST,
       payload: { title: action?.payload?.inputValue ? action?.payload?.inputValue : '' }
@@ -68,11 +56,7 @@ function* selectPostSaga(action) {
   yield put({ type: actionType.UPDATE_VIEW_POST, payload: data });
 }
 
-function* selectPost() {
-  yield takeLatest(actionType.SELECT_POST, selectPostSaga);
-}
-
-function* createPostSaga(action) {
+export function* createPostSaga(action) {
   const allPosts = yield select((state) => state.postReducer.allPosts);
   const viewablePosts = yield select((state) => state.postReducer.viewablePosts);
 
@@ -85,21 +69,14 @@ function* createPostSaga(action) {
   });
 }
 
-function* createNewPost() {
-  yield takeLatest(actionType.CREATE_NEW_POST, createPostSaga);
-}
-
-function* setEditPostSaga(action) {
+export function* setEditPostSaga(action) {
   yield put({
     type: actionType.SET_EDIT_POST_VALUE,
     payload: action.payload
   });
 }
-function* setEditPost() {
-  yield takeLatest(actionType.SET_EDIT_POST, setEditPostSaga);
-}
 
-function* setUpdatePostSaga(action) {
+export function* setUpdatePostSaga(action) {
   const allPosts = yield select((state) => state.postReducer.allPosts);
   const viewablePosts = yield select((state) => state.postReducer.viewablePosts);
 
@@ -125,21 +102,14 @@ function* setUpdatePostSaga(action) {
   });
 }
 
-function* setUpdatePost() {
-  yield takeLatest(actionType.UPDATE_POST, setUpdatePostSaga);
-}
-
-function* setDeletePostSaga(action) {
+export function* setDeletePostSaga(action) {
   yield put({
     type: actionType.SET_DELETE_POST_VALUE,
     payload: action.payload
   });
 }
-function* setDeletePost() {
-  yield takeLatest(actionType.SET_DELETE_POST, setDeletePostSaga);
-}
 
-function* confirmDeletionSaga(action) {
+export function* confirmDeletionSaga(action) {
   const allPosts = yield select((state) => state.postReducer.allPosts);
   const viewablePosts = yield select((state) => state.postReducer.viewablePosts);
 
@@ -164,20 +134,16 @@ function* confirmDeletionSaga(action) {
   });
 }
 
-function* confirmDeletion() {
+function* postsSaga() {
+  yield takeLatest(actionType.FETCH_ALL_POST, fetchAllPostsSaga);
+  yield takeLatest(actionType.SET_PRE_EDIT_POST, setPreEditPostSaga);
+  yield takeLatest(actionType.SEARCH_PRE_EDIT_POST, searchPreEditPostSaga);
+  yield takeLatest(actionType.SELECT_POST, selectPostSaga);
+  yield takeLatest(actionType.CREATE_NEW_POST, createPostSaga);
+  yield takeLatest(actionType.SET_EDIT_POST, setEditPostSaga);
+  yield takeLatest(actionType.UPDATE_POST, setUpdatePostSaga);
+  yield takeLatest(actionType.SET_DELETE_POST, setDeletePostSaga);
   yield takeLatest(actionType.DELETE_POST, confirmDeletionSaga);
 }
 
-export default function* postsSaga() {
-  yield all([
-    fork(fetchAllPosts),
-    fork(setPreEditPost),
-    fork(searchPreEditPost),
-    fork(selectPost),
-    fork(createNewPost),
-    fork(setEditPost),
-    fork(setUpdatePost),
-    fork(setDeletePost),
-    fork(confirmDeletion)
-  ]);
-}
+export default postsSaga;

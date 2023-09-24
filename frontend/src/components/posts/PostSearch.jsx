@@ -4,7 +4,10 @@ import { useState } from 'react';
 import { Search } from '@mui/icons-material';
 import { selectPost } from '../../redux/actions';
 
-const filter = createFilterOptions();
+const filter = createFilterOptions({
+  matchFrom: 'start',
+  stringify: (option) => option.title
+});
 
 const PostSearch = () => {
   const dispatch = useDispatch();
@@ -20,13 +23,12 @@ const PostSearch = () => {
   return (
     <div style={{ minHeight: 64 }}>
       <Autocomplete
+        aria-label="Search for title"
         value={value}
         onChange={(_, newValue) => handleSelect(newValue)}
         filterOptions={(options, params) => {
           const filtered = filter(options, params);
-
           const { inputValue } = params;
-          // Suggest the creation of a new value
           const isExisting = options?.some((option) => inputValue === option.title);
           if (inputValue !== '' && !isExisting) {
             filtered.push({
@@ -34,7 +36,6 @@ const PostSearch = () => {
               title: `Add "${inputValue}"`
             });
           }
-
           return filtered;
         }}
         selectOnFocus
@@ -50,17 +51,18 @@ const PostSearch = () => {
         size="small"
         renderInput={(params) => (
           <TextField
+            {...params}
             margin="dense"
             size="small"
+            fullWidth
             InputProps={{
               ...params.InputProps,
               startAdornment: (
-                <InputAdornment position="start">
+                <InputAdornment sx={{ marginRight: 0 }} position="start">
                   <Search />
                 </InputAdornment>
               )
             }}
-            {...params}
             placeholder="Search for title"
           />
         )}

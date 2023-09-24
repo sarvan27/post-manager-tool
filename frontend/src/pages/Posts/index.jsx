@@ -18,25 +18,30 @@ function Posts() {
 
   return (
     <Container maxWidth="md" style={{ marginTop: 64 }}>
-      {postLoading ? (
-        <>
-          {Array(10)
-            .fill(0)
-            .map((_, index) => (
-              <Skeleton key={index} height={66} width={'100%'} />
-            ))}
-        </>
-      ) : (
-        <>
-          <PostSearch />
+      <div style={{ paddingTop: 8 }}>
+        <PostSearch />
+        {postLoading ? (
+          <>
+            {Array(10)
+              .fill(0)
+              .map((_, index) => (
+                <Skeleton
+                  key={index}
+                  height={150}
+                  width={'100%'}
+                  style={{ transform: 'scale(1,0.9)' }}
+                />
+              ))}
+          </>
+        ) : (
           <div>
             {viewablePosts?.length > 0 &&
               viewablePosts.map((obj, index) => <PostCardItem key={index} {...obj} />)}
           </div>
-          <AddOrEditPost />
-          <DeletePostFeedback />
-        </>
-      )}
+        )}
+        <AddOrEditPost />
+        <DeletePostFeedback />
+      </div>
     </Container>
   );
 }

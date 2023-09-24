@@ -36,6 +36,8 @@ const AddOrEditPost = () => {
     setSearch('');
   }, [preEditPost]);
 
+  console.log('addNew', addNew);
+
   useEffect(() => {
     setData({ ...addNew, userId: '', body: '' });
   }, [addNew]);
@@ -93,9 +95,9 @@ const AddOrEditPost = () => {
       onClose={handleClose}>
       <DialogTitle>
         {preEditPost
-          ? 'Search title'
+          ? 'Search a title'
           : editPost?.id
-          ? `Update post - ${editPost?.id}`
+          ? `Update post #${editPost?.id}`
           : 'Create new post'}
       </DialogTitle>
       <DialogContent>
@@ -106,7 +108,8 @@ const AddOrEditPost = () => {
                 value={search}
                 onChange={(e) => handleSearch(e.target.value)}
                 InputProps={{
-                  startAdornment: <Search htmlColor="gray" sx={{ marginRight: 1 }} />
+                  startAdornment: <Search htmlColor="gray" sx={{ marginRight: 1 }} />,
+                  inputProps: { 'data-testid': 'add-or-edit-post-search' }
                 }}
                 size="small"
                 autoFocus
