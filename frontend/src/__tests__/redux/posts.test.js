@@ -1,7 +1,6 @@
-import { call, fork, put, takeEvery, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest } from 'redux-saga/effects';
 import * as actionType from '../../redux/actionTypes';
-import postsSaga, { fetchAllPostsSaga, setPreEditPostSaga } from '../../redux/sagas/posts.js';
-import { getAllPostsApi } from '../../redux/api';
+import postsSaga, { fetchAllPostsSaga } from '../../redux/sagas/posts.js';
 
 describe('Posts saga', () => {
   // to test sagas watcher function and postsSaga
